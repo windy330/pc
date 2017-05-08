@@ -1,0 +1,433 @@
+<%@page import="com.weixinjia.recreation.common.context.SpringContextManager" %>
+    <%@page import="com.weixinjia.recreation.gameservice.service.ManageActivityService" %>
+        <%@page import="com.weixinjia.recreation.newcore.entity.GamePage" %>
+            <%@page import="com.weixinjia.recreation.newcore.entity.Activity" %>
+                <%@page import="org.apache.commons.lang.StringUtils" %>
+                    <%@page import="com.weixinjia.recreation.wxapi.sysoauth2.service.UnionUserSystem" %>
+                        <%@page import="com.weixinjia.recreation.wxapi.entity.OpenUser" %>
+                            <%@page import="com.weixinjia.recreation.common.util.PlatformUtils" %>
+                                <%@page import="com.weixinjia.recreation.common.constant.PlatformURL" %>
+                                    <%@ page language="java" contentType="text/html; charset=UTF-8"
+         pageEncoding="UTF-8" %>
+                                        <%@taglib prefix="wxj" uri="http://www.weixinjia.com/jstl/wxj" %>
+                                            <%
+PlatformURL platform = PlatformUtils.getPlatformUrl();
+String resourceDomain=platform.getJsCssDomain();
+OpenUser openUser = UnionUserSystem.getSystemOpenUser(request, response);
+String aid = request.getParameter("aid");
+String activityid = request.getParameter("activityid");
+String wuid = request.getParameter("wuid");
+%>
+                                                <!DOCTYPE html>
+                                                <html>
+
+                                                <head>
+                                                    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+                                                    <meta name="viewport" content="width=device-width,minimum-scale=1,user-scalable=no,maximum-scale=1,initial-scale=1" />
+                                                    <meta name="apple-mobile-web-app-capable" content="yes" />
+                                                    <meta name="apple-mobile-web-app-status-bar-style" content="black" />
+                                                    <meta name="format-detection" content="telephone=no,email=no,adress=no">
+                                                    <meta http-equiv="x-rim-auto-match" content="none">
+                                                    <title>愚人消消乐</title>
+                                                </head>
+                                                <style>
+                                                    #titleImg {
+                                                        z-index: 101;
+                                                        top: 3.0rem;
+                                                        left: 1.4rem;
+                                                        width: 12.95rem;
+                                                        height: 3.8rem;
+                                                    }
+                                                    
+                                                    #startBtnImg {
+                                                        top: 18.5rem;
+                                                        left: 4.5rem;
+                                                        width: 6.625rem;
+                                                        height: 3.2rem;
+                                                    }
+                                                    
+                                                    #homeBgBox {
+                                                        position: absolute;
+                                                        z-index: 3;
+                                                    }
+                                                    
+                                                    #join_line_cont {
+                                                        top: 22rem;
+                                                    }
+                                                    
+                                                    .title_img.titleDown>.ui-wrapper {
+                                                        top: 70px;
+                                                        left: 20px;
+                                                    }
+                                                    
+                                                    #backfill_panel {
+                                                        height: 100%;
+                                                        width: 100%;
+                                                        background-size: 100% auto;
+                                                    }
+                                                    
+                                                    .canvas-wrap {
+                                                        position: absolute;
+                                                        top: 9.35rem;
+                                                        left: 1.2rem;
+                                                        width: 13.65rem;
+                                                        height: 13.65rem;
+                                                        z-index: 1;
+                                                    }
+                                                    
+                                                    .editTarget-ban {
+                                                        position: absolute;
+                                                        top: 8.47rem;
+                                                        left: 0.25rem;
+                                                        width: 15.55rem;
+                                                        height: 16.05rem;
+                                                    }
+                                                    
+                                                    .canvas-wrap .block-item {
+                                                        position: static !important;
+                                                        float: left;
+                                                        width: 1.95rem !important;
+                                                        height: 1.95rem !important;
+                                                        background-image: url(<%=platform.getJsCssDomain()%>/image/mobile/newgame/gamepage/xiaoxiaole/blue.png);
+                                                        background-size: 100% 100%;
+                                                    }
+                                                    
+                                                    .canvas-wrap .block-item.green {
+                                                        background-image: url(<%=platform.getJsCssDomain()%>/image/mobile/newgame/gamepage/xiaoxiaole/green.png);
+                                                        background-size: 100% 100%;
+                                                    }
+                                                    
+                                                    .canvas-wrap .block-item.orange {
+                                                        background-image: url(<%=platform.getJsCssDomain()%>/image/mobile/newgame/gamepage/xiaoxiaole/orange.png);
+                                                        background-size: 100% 100%;
+                                                    }
+                                                    
+                                                    .canvas-wrap .block-item.yellow {
+                                                        background-image: url(<%=platform.getJsCssDomain()%>/image/mobile/newgame/gamepage/xiaoxiaole/yellow.png);
+                                                        background-size: 100% 100%;
+                                                    }
+                                                    
+                                                    .canvas-wrap .block-item.zise {
+                                                        background-image: url(<%=platform.getJsCssDomain()%>/image/mobile/newgame/gamepage/xiaoxiaole/zise.png);
+                                                        background-size: 100% 100%;
+                                                    }
+                                                    
+                                                    #canvas_wrap .imgContainer {
+                                                        position: static !important;
+                                                    }
+                                                    
+                                                    .editTarget-mouth {
+                                                        position: absolute;
+                                                        top: 6.3rem;
+                                                        left: 6.5rem;
+                                                        width: 2.25rem;
+                                                        height: 2.25rem;
+                                                        z-index: 1;
+                                                    }
+                                                    
+                                                    .editTarget-xiaochou {
+                                                        position: absolute;
+                                                        top: 1.5rem;
+                                                        left: 4.25rem;
+                                                        width: 6.95rem;
+                                                        height: 8.25rem;
+                                                        background-size: 100% 100%;
+                                                        z-index: 1;
+                                                    }
+                                                    
+                                                    .xxl-time {
+                                                        position: absolute;
+                                                        top: 0.8rem;
+                                                        left: 2.9rem;
+                                                        width: 2rem;
+                                                        height: 1rem;
+                                                        background-size: 100% 100%;
+                                                        color: #fff;
+                                                        font-size: 0.8rem;
+                                                        -webkit-box-sizing: border-box;
+                                                        box-sizing: border-box;
+                                                    }
+                                                    
+                                                    .editTarget-time {
+                                                        position: absolute;
+                                                        top: 0.5rem;
+                                                        left: 0.5rem;
+                                                        width: 5.05rem;
+                                                        height: 1.77rem;
+                                                        -webkit-box-sizing: border-box;
+                                                        box-sizing: border-box;
+                                                    }
+                                                    
+                                                    .xxl-score {
+                                                        position: absolute;
+                                                        top: 0.8rem;
+                                                        left: 12.7rem;
+                                                        width: 2rem;
+                                                        height: 1rem;
+                                                        color: #fff;
+                                                        font-size: 0.8rem;
+                                                        -webkit-box-sizing: border-box;
+                                                        box-sizing: border-box;
+                                                    }
+                                                    
+                                                    .editTarget-score {
+                                                        position: absolute;
+                                                        top: 0.5rem;
+                                                        left: 10.5rem;
+                                                        width: 5.05rem;
+                                                        height: 1.77rem;
+                                                        -webkit-box-sizing: border-box;
+                                                        box-sizing: border-box;
+                                                    }
+                                                </style>
+                                                <script type="text/javascript">
+                                                    //window.editPageCount = 1;
+                                                </script>
+
+                                                <body>
+                                                    <jsp:include page="common.jsp"></jsp:include>
+                                                    <%
+String gameImgPath = request.getAttribute("gameImgPath").toString();
+%>
+                                                        <jsp:include page="/mobile/newgame/game_startpage.jsp"></jsp:include>
+
+                                                        <!-- 消消乐外页 -->
+                                                        <div id="backfill_panel" class="game_page gameBox gameBgBox">
+                                                            <!-- 背景图片已经好了 -->
+                                                            <div id="gameBgBox">
+                                                                <img id="gameBg" src="" style="width:100%;height:auto">
+                                                            </div>
+                                                            <!--  -->
+                                                            <div id="gameLayerBox" style="z-index: 11;">
+                                                                <img class="editTarget-time">
+                                                                <div class="xxl-time">1000</div>
+                                                                <img class="editTarget-score">
+                                                                <div class="xxl-score">1000</div>
+                                                                <img class="editTarget-xiaochou">
+                                                                <img class="editTarget-mouth">
+                                                                <img class="editTarget-ban">
+                                                                <div id="canvas_wrap" class="canvas-wrap"></div>
+                                                            </div>
+                                                        </div>
+                                                </body>
+
+                                                <script type="text/javascript">
+                                                    //自定义配置传递
+                                                    Edit.originDef = [{
+                                                        "name": "time",
+                                                        "pos": {
+                                                            "left": "0.5rem",
+                                                            "top": "0.5rem",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "5.05rem",
+                                                            "height": "1.77rem"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/xiaoxiaole/game/time.png", "时间", "100k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "score",
+                                                        "pos": {
+                                                            "left": "10.5rem",
+                                                            "top": "0.5rem",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "5.05rem",
+                                                            "height": "1.77rem"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/xiaoxiaole/game/fen.png", "分数", "100k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "xiaochou",
+                                                        "pos": {
+                                                            "left": "4.25rem",
+                                                            "top": "1.5rem",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "6.95rem",
+                                                            "height": "8.25rem"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/xiaoxiaole/game/xiaochou.png", "小丑", "100k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "mouth",
+                                                        "pos": {
+                                                            "left": "6.5rem",
+                                                            "top": "6.3rem",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "2.25rem",
+                                                            "height": "2.25rem"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/xiaoxiaole/game/xiao.png", "笑", "100k"],
+                                                            ["*_resRoot*/xiaoxiaole/game/xiao2.png", "笑", "100k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "ban",
+                                                        "pos": {
+                                                            "left": "0.25rem",
+                                                            "top": "8.47rem",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "15.55rem",
+                                                            "height": "16.05rem"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/xiaoxiaole/game/ban.png", "框", "100k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "blue",
+                                                        "pos": {
+                                                            "top": "0",
+                                                            "left": "0",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "100%",
+                                                            "height": "100%"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/gamepage/xiaoxiaole/blue.png", "蓝色方块", "20k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "green",
+                                                        "pos": {
+                                                            "top": "0",
+                                                            "left": "0",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "100%",
+                                                            "height": "100%"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/gamepage/xiaoxiaole/green.png", "绿色方块", "20k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "orange",
+                                                        "pos": {
+                                                            "top": "0",
+                                                            "left": "0",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "100%",
+                                                            "height": "100%"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/gamepage/xiaoxiaole/orange.png", "橙色方块", "20k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "yellow",
+                                                        "pos": {
+                                                            "top": "0",
+                                                            "left": "0",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "100%",
+                                                            "height": "100%"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/gamepage/xiaoxiaole/yellow.png", "黄色方块", "20k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }, {
+                                                        "name": "zise",
+                                                        "pos": {
+                                                            "top": "0",
+                                                            "left": "0",
+                                                            "disable": "disable"
+                                                        },
+                                                        "size": {
+                                                            "width": "100%",
+                                                            "height": "100%"
+                                                        },
+                                                        "path": [
+                                                            ["*_resRoot*/gamepage/xiaoxiaole/zise.png", "紫色方块", "20k"]
+                                                        ],
+                                                        "edit": "all"
+                                                    }];
+
+                                                    var pubResizeDef = { //图片恢复默认参数
+                                                        'titleImg': {
+                                                            width: '12.95rem',
+                                                            height: '3.8rem',
+                                                            left: '1.4rem',
+                                                            top: '3.0rem'
+                                                        },
+                                                        'startBtnImg': {
+                                                            width: '6.625rem',
+                                                            height: '3.2rem',
+                                                            left: '4.5rem',
+                                                            top: '18.5rem'
+                                                        }
+                                                    };
+                                                    // 发起页
+                                                    /*window.game._showIndexPage= function(){
+		window.game._showGamePage();
+    }*/
+                                                    // 主页图片
+
+                                                    function appendBlock() {
+                                                        var strDom = "";
+                                                        for (var i = 0; i < 49; i++) {
+                                                            strDom += "<div class='block-item'></div>";
+                                                        }
+                                                        $("#canvas_wrap").append(strDom);
+                                                        // 加上颜色
+                                                        $("#canvas_wrap").find(".block-item").each(function(i) {
+                                                            var $this = $(this);
+                                                            if (i % 2 == 0) {
+                                                                $this.addClass("green");
+                                                                $this.addClass("editTarget-green");
+                                                            } else if (i % 3 == 0) {
+                                                                $this.addClass("orange");
+                                                                $this.addClass("editTarget-orange");
+                                                            } else if (i % 5 == 0) {
+                                                                $this.addClass("yellow");
+                                                                $this.addClass("editTarget-yellow");
+                                                            } else if (i % 6 == 0) {
+                                                                $this.addClass("zise");
+                                                                $this.addClass("editTarget-zise");
+                                                            } else {
+                                                                $this.addClass("editTarget-blue");
+                                                            }
+                                                        });
+                                                        $("#canvas_wrap").find(".block-item").eq(48).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                        $("#canvas_wrap").find(".block-item").eq(46).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                        $("#canvas_wrap").find(".block-item").eq(12).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                        $("#canvas_wrap").find(".block-item").eq(16).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                        $("#canvas_wrap").find(".block-item").eq(18).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                        $("#canvas_wrap").find(".block-item").eq(24).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                        $("#canvas_wrap").find(".block-item").eq(32).removeClass("editTarget-green").addClass("zise editTarget-zise");
+                                                    }
+                                                    appendBlock();
+                                                    //Edit.originDef = [{}];
+                                                    //Edit.originDef = [
+                                                    //{"name":"blue","pos":{"top":"0","left":"0", "disable":"disable"},"size":{"width":"100%","height":"100%"},"path":[["*_resRoot*/gamepage/xiaoxiaole/blue.png","蓝色方块","20k"]], "edit":"all"},
+                                                    //{"name":"green","pos":{"top":"0","left":"0", "disable":"disable"},"size":{"width":"100%","height":"100%"},"path":[["*_resRoot*/gamepage/xiaoxiaole/green.png","绿色方块","20k"]], "edit":"all"},
+                                                    //{"name":"orange","pos":{"top":"0","left":"0", "disable":"disable"},"size":{"width":"100%","height":"100%"},"path":[["*_resRoot*/gamepage/xiaoxiaole/orange.png","橙色方块","20k"]], "edit":"all"},
+                                                    //{"name":"yellow","pos":{"top":"0","left":"0", "disable":"disable"},"size":{"width":"100%","height":"100%"},"path":[["*_resRoot*/gamepage/xiaoxiaole/yellow.png","黄色方块","20k"]], "edit":"all"},
+                                                    //{"name":"zise","pos":{"top":"0","left":"0", "disable":"disable"},"size":{"width":"100%","height":"100%"},"path":[["*_resRoot*/gamepage/xiaoxiaole/zise.png","紫色方块","20k"]], "edit":"all"}
+                                                    /*];*/
+                                                </script>
+
+                                                </html>

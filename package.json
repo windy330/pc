@@ -1,0 +1,10 @@
+{
+  "dependencies": {
+    "gulp": "^3.9.1",
+    "gulp-cli": "^1.2.2",
+    "jQuery": "^1.7.4"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1"
+  }
+}

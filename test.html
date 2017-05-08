@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+<body>
+    <section class="qipan">
+        
+    </section>
+	<script src="./node_modules/jQuery/tmp/jquery.js"></script>
+    <script>
+        // 自定义礼物
+	var className = "";
+	var posStr = [{"left":"8.725rem","top":"4.825rem","width":"1.95rem","height":"2.25rem"}];
+	function appendBlock(className,posStr) {
+		var strDom = "";
+		for(var i=0; i<posStr.length;i++){
+			strDom += "<div class='"+className+"'></div>";
+		}
+		$(".qipan").append(strDom);
+		//加上定位
+		var slec = "."+className;
+		$(".qipan").find(slec).each(function(i){
+			var $this = $(this);
+			$this.css(posStr[i]);
+		});
+	}
+	appendBlock("editTarget-award",posStr);
+    </script>
+</body>
+</html>

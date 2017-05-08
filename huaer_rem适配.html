@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>huaer_rem适配</title>
+    <style>
+        html,
+        body，section {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        section {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+        
+        section>img {
+            position: absolute;
+            top: 0.5rem;
+            left: 0.5rem;
+            width: 2.5rem;
+            height: auto;
+            border-radius: 50%;
+        }
+    </style>
+    <script type="text/javascript">
+        var html = document.documentElement;
+        var windowWidth = html.clientWidth;
+        html.style.fontSize = windowWidth * 20 / 320 + 'px';
+        // html.style.fontSize = windowWidth / 6.4 + 'px';
+        console.log(windowWidth);
+    </script>
+</head>
+<section>
+    <img src="./images/music_on.png" alt="">
+</section>
+
+<body>
+
+</body>
+
+</html>
